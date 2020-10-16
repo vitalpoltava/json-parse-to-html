@@ -1,4 +1,4 @@
-import { Branch, Attrs, Content } from './types';
+import {Branch, Attrs, Content} from './types';
 
 const textMap = new Map();
 const searches = new Map();
@@ -9,7 +9,7 @@ const getTag = tag => tagMap.get(tag) || tag;
 const camelToDash = str => str.replace(/[A-Z]/g, letter => `-${letter.toLowerCase()}`);
 
 const getStyles = (attrs: Attrs) => {
-    const { textCSS } = attrs;
+    const {textCSS} = attrs;
     const styles =
         textCSS &&
         Object.entries(textCSS)
@@ -22,18 +22,18 @@ const hasChildNode = item => item && item.hasOwnProperty('content') && item.cont
 
 const renderBranch = (branch: Branch, html = '') => {
     if (hasChildNode(branch)) {
-        const { type, attrs, content } = branch;
-        return `<${getTag(type)}${getStyles(attrs)}>${renderDoc(content)}</${getTag(type)}>`;
+        const {type, attrs, content} = branch;
+        return `<${getTag(type)}${getStyles(attrs)}>${renderContent(content)}</${getTag(type)}>`;
     } else {
         const textId = getUniqueId();
-        const { type, text = '', attrs } = branch;
+        const {type, text = '', attrs} = branch;
         textMap.set(text, textId);
         html += `<${getTag(type)}${getStyles(attrs)} id="${textId}">${text}</${getTag(type)}>`;
     }
     return html;
 };
 
-export const renderDoc = (json: Content) => json.map(item => renderBranch(item)).join('');
+export const renderContent = (content: Content) => content.map(item => renderBranch(item)).join('');
 
 const findSearchIds = (mapObj: Map<string, string>, searchStr = '') => {
     const ids = [];
