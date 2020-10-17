@@ -1,14 +1,12 @@
 export interface Attrs {
-    textCSS: {
-        [key: string]: string
-    };
+    [key: string]: any;
 }
 
 export interface Branch {
     type: string;
     text?: string;
-    attrs: Attrs;
-    content: Content;
+    attrs?: Attrs;
+    content?: Content;
 }
 
 export type Content = Array<Branch>;

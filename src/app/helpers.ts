@@ -1,14 +1,15 @@
 import {Branch, Attrs, Content} from './types';
 
+const tagMap = new Map([['paragraph', 'p']]);
 const textMap = new Map();
 const searches = new Map();
-const tagMap = new Map([['paragraph', 'p']]);
+let lastSearch: Array<string>;
 
 const getUniqueId = () => `${Math.floor(Math.random() * 10000)}-${Math.floor(Math.random() * 10000)}`;
 const getTag = tag => tagMap.get(tag) || tag;
 const camelToDash = str => str.replace(/[A-Z]/g, letter => `-${letter.toLowerCase()}`);
 
-const getStyles = (attrs: Attrs) => {
+const getStyles = (attrs: Attrs = {}) => {
     const {textCSS} = attrs;
     const styles =
         textCSS &&
@@ -33,8 +34,6 @@ const renderBranch = (branch: Branch, html = '') => {
     return html;
 };
 
-export const renderContent = (content: Content) => content.map(item => renderBranch(item)).join('');
-
 const findSearchIds = (mapObj: Map<string, string>, searchStr = '') => {
     const ids = [];
     for (const [text, id] of Array.from(mapObj)) {
@@ -45,11 +44,15 @@ const findSearchIds = (mapObj: Map<string, string>, searchStr = '') => {
     return ids;
 };
 
-// wrapper search function
-const search = searchStr => {
+export const search = searchStr => {
     if (searches.has(searchStr)) {
         return searches.get(searchStr);
     }
     const ids = findSearchIds(textMap, searchStr);
     searches.set(searchStr, ids);
+    lastSearch = ids;
+    return ids;
 };
+
+export const renderContent = (content: Content): string => content.map(item => renderBranch(item)).join('');
+export const getLastSearch = () => lastSearch;
