@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, Output, ViewChild} from '@angular/core';
 import {FormControl} from '@angular/forms';
 
 @Component({
@@ -9,6 +9,7 @@ import {FormControl} from '@angular/forms';
 export class SearchComponent {
     @Input() history?: Array<string>;
     @Output() searchEmitter = new EventEmitter<string>();
+    @ViewChild('searchInput') searchInput: ElementRef;
 
     searchControl = new FormControl('');
 
@@ -18,6 +19,12 @@ export class SearchComponent {
 
     onHistoryItemSelect(searchItem: string) {
         this.searchControl.setValue(searchItem);
+        this.emitSearch();
+    }
+
+    clearSearch() {
+        this.searchInput.nativeElement.focus();
+        this.searchControl.setValue('');
         this.emitSearch();
     }
 

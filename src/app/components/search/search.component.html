@@ -15,11 +15,14 @@
             <div class="input-group">
                 <div class="input-group-prepend">
                     <div class="input-group-text bg-white border-right-0">
-                        <i class="fa fa-search" aria-hidden="true"></i>
+                        <i class="fa fa-search text-muted" aria-hidden="true"></i>
                     </div>
                 </div>
-                <input (keydown.enter)="emitSearch()" type="text" [formControl]="searchControl" class="form-control border-left-0" placeholder="Search text" aria-label="Search">
+                <input #searchInput (keydown.enter)="emitSearch()" type="text" [formControl]="searchControl" class="form-control border-left-0 border-right-0" placeholder="Search text" aria-label="Search">
                 <div class="input-group-append">
+                    <div tabindex="0" (keydown.enter)="clearSearch()" (click)="clearSearch()" class="input-group-text bg-white border-left-0">
+                        <i class="fa fa-times-circle text-muted" aria-hidden="true"></i>
+                    </div>
                     <button (click)="emitSearch()" [disabled]="searchButtonDisabled" class="btn btn-primary" type="button">Search</button>
                 </div>
             </div>

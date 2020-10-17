@@ -23,13 +23,18 @@ export class AppComponent implements OnInit {
         if (ids && ids.length > 0) {
             ids.forEach(id => {
                 const el = this.documentContent.nativeElement.querySelector(`[id="${id}"] [name="search"]`);
-                el.outerHTML = el.innerHTML;
+                if (el) {
+                    el.outerHTML = el.innerHTML;
+                }
             });
         }
     }
 
     searchWord(searchTerm: string) {
         this.clearLastSearch();
+        if (!searchTerm) {
+            return;
+        }
         const ids = search(searchTerm);
 
         if (ids && ids.length > 0) {
