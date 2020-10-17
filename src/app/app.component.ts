@@ -29,7 +29,7 @@ export class AppComponent implements OnInit {
         }
     }
 
-    searchWord(searchTerm: string) {
+    searchWord(searchTerm: string, replacement?: string) {
         let found = 0;
         this.clearSearch();
         if (!searchTerm) {
@@ -47,11 +47,16 @@ export class AppComponent implements OnInit {
                         .replace('&amp;', '&')
                         .replace(reg, function (match) {
                             found++;
-                            return `<span role="search" class="bg-warning text-white">${match}</span>`;
+                            return replacement ? replacement : `<span role="search" class="bg-warning text-white">${match}</span>`;
                         });
                 }
             });
         }
         this.found = found;
+    }
+
+    replaceWord(payload: string[]) {
+        const [searchTerm, replaceTerm] = payload;
+        this.searchWord(searchTerm, replaceTerm);
     }
 }

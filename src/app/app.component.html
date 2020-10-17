@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row">
             <div class="col-12 py-3 bg-light border-bottom">
-                <app-search [history]="history" (searchEmitter)="searchWord($event)"></app-search>
+                <app-search [found]="found" [history]="history" (replaceEmitter)="replaceWord($event)" (searchEmitter)="searchWord($event)"></app-search>
                 <div *ngIf="found > 0" class="mt-2 text-muted font-weight-lighter">Found: {{found}} time(s)</div>
             </div>
         </div>

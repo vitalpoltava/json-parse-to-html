@@ -1,5 +1,5 @@
 <div>
-    <div class="d-flex flex-row">
+    <div class="d-flex justify-content-start">
         <div class="pr-2">
             <div class="dropdown">
                 <button class="btn btn-secondary dropdown-toggle" type="button" id="searchDropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -13,19 +13,33 @@
         </div>
         <div class="pr-2">
             <div class="input-group">
-                <div class="input-group-prepend">
-                    <div class="input-group-text bg-white border-right-0">
-                        <i class="fa fa-search text-muted" aria-hidden="true"></i>
-                    </div>
-                </div>
-                <input #searchInput (keydown.enter)="emitSearch()" type="text" [formControl]="searchControl" class="form-control border-left-0 border-right-0" placeholder="Search text" aria-label="Search">
+                <input #searchInput (keydown.enter)="emitSearch()" type="text" [formControl]="searchControl" class="form-control border-right-0" placeholder="Search text" aria-label="Search">
                 <div class="input-group-append">
                     <div tabindex="0" (keydown.enter)="clearSearch()" (click)="clearSearch()" class="input-group-text bg-white border-left-0">
                         <i class="fa fa-times-circle text-muted" aria-hidden="true"></i>
                     </div>
-                    <button (click)="emitSearch()" [disabled]="searchButtonDisabled" class="btn btn-primary" type="button">Search</button>
+                    <button (click)="emitSearch()" [disabled]="searchButtonDisabled" class="btn btn-primary" type="button">
+                        <i class="fa fa-search text-white" aria-hidden="true"></i>
+                    </button>
                 </div>
             </div>
         </div>
+        <div *ngIf="found" class="mx-3 d-flex align-items-center">
+            <i class="fa fa-arrow-right"></i>
+        </div>
+        <div *ngIf="found" class="d-inline-block">
+            <div class="input-group">
+                <input #replaceInput (keydown.enter)="emitReplace()" type="text" [formControl]="replaceControl" class="form-control border-right-0" placeholder="Replace with text" aria-label="Replace">
+                <div class="input-group-append">
+                    <div tabindex="0" (keydown.enter)="clearReplace()" (click)="clearReplace()" class="input-group-text bg-white">
+                        <i class="fa fa-times-circle text-muted" aria-hidden="true"></i>
+                    </div>
+                    <button (click)="emitReplace()" class="btn btn-primary" type="button">
+                        Replace
+                    </button>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
