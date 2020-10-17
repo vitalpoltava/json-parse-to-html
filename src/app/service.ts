@@ -3,7 +3,6 @@ import {Branch, Attrs, Content} from './types';
 const tagMap = new Map([['paragraph', 'p']]);
 const textMap = new Map();
 const searches = new Map();
-let lastSearch: Array<string>;
 
 const getUniqueId = () => `${Math.floor(Math.random() * 10000)}-${Math.floor(Math.random() * 10000)}`;
 const getTag = tag => tagMap.get(tag) || tag;
@@ -37,7 +36,7 @@ const renderBranch = (branch: Branch, html = '') => {
 const findSearchIds = (mapObj: Map<string, string>, searchStr = '') => {
     const ids = [];
     for (const [text, id] of Array.from(mapObj)) {
-        if (text.includes(searchStr)) {
+        if (text.toLowerCase().includes(searchStr.toLowerCase())) {
             ids.push(id);
         }
     }
@@ -50,10 +49,8 @@ export const search = searchStr => {
     }
     const ids = findSearchIds(textMap, searchStr);
     searches.set(searchStr, ids);
-    lastSearch = ids;
     return ids;
 };
 
 export const renderContent = (content: Content): string => content.map(item => renderBranch(item)).join('');
-export const getLastSearch = () => lastSearch && [...lastSearch];
 export const getSearchHistory = () => Array.from(searches.keys());
