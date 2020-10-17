@@ -42,7 +42,9 @@ export class AppComponent implements OnInit {
                 const el = this.documentContent.nativeElement.querySelector(`[id="${id}"]`);
                 if (el) {
                     const reg = new RegExp(searchTerm, 'ig');
-                    el.innerHTML = el.innerHTML
+                    const content = el.innerHTML;
+                    el.innerHTML = content
+                        .replace('&amp;', '&')
                         .replace(reg, function (match) {
                             found++;
                             return `<span role="search" class="bg-warning text-white">${match}</span>`;
