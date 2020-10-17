@@ -8,6 +8,12 @@ const getUniqueId = () => `${Math.floor(Math.random() * 10000)}-${Math.floor(Mat
 const getTag = tag => tagMap.get(tag) || tag;
 const camelToDash = str => str.replace(/[A-Z]/g, letter => `-${letter.toLowerCase()}`);
 
+/**
+ * @description
+ * Create inline styles string, based on config
+ *
+ * @param attrs
+ */
 const getStyles = (attrs: Attrs = {}) => {
   const { textCSS } = attrs;
   const styles =
@@ -18,8 +24,22 @@ const getStyles = (attrs: Attrs = {}) => {
   return styles ? ` style="${styles}"` : '';
 };
 
+/**
+ * @description
+ * Check if child tree node exists (to decide if we need to go deeper)
+ *
+ * @param item
+ */
 const hasChildNode = item => item && item.hasOwnProperty('content') && item.content.length > 0;
 
+/**
+ * @description
+ * Traversing the json tree with circular dependency to be able to go through
+ * list of multiple leafs.
+ *
+ * @param branch
+ * @param html
+ */
 const renderBranch = (branch: Branch, html = '') => {
   if (hasChildNode(branch)) {
     const { type, attrs, content } = branch;
@@ -33,6 +53,13 @@ const renderBranch = (branch: Branch, html = '') => {
   return html;
 };
 
+/**
+ * @description
+ * Find a list of ids of text nodes which has the search term (once or more)
+ *
+ * @param mapObj
+ * @param searchStr
+ */
 const findSearchIds = (mapObj: Map<string, string>, searchStr = '') => {
   const ids = [];
   for (const [text, id] of Array.from(mapObj)) {
@@ -43,6 +70,13 @@ const findSearchIds = (mapObj: Map<string, string>, searchStr = '') => {
   return ids;
 };
 
+/**
+ * @description
+ * Wrapper search function to memoize searches in order to improve performance,
+ * and save searches history to use in UI
+ *
+ * @param searchStr
+ */
 export const search = searchStr => {
   if (searches.has(searchStr)) {
     return searches.get(searchStr);
@@ -52,5 +86,8 @@ export const search = searchStr => {
   return ids;
 };
 
+/**
+ * API
+ */
 export const renderContent = (content: Content): string => content.map(item => renderBranch(item)).join('');
 export const getSearchHistory = () => Array.from(searches.keys());
