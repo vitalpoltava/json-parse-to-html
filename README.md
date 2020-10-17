@@ -29,4 +29,5 @@ Basic accessibility added - you can make all `search`/`replace` actions with key
 
 ![Screenshot2](./Screenshot2.png?raw=true)
 
+![Screenshot3](./Screenshot3.png?raw=true)
 
