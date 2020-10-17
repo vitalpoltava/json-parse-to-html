@@ -1,5 +1,5 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
-import { renderContent, search, getSearchHistory } from './service';
+import { renderContent, search, getSearchHistory, replaceInSource } from './service';
 import { documentObject } from './data/doc';
 
 @Component({
@@ -38,6 +38,9 @@ export class AppComponent implements OnInit {
     const ids = search(searchTerm);
 
     if (ids && ids.length > 0) {
+      if (replacement) {
+        replaceInSource(ids, searchTerm, replacement);
+      }
       ids.forEach(id => {
         const el = this.documentContent.nativeElement.querySelector(`[id="${id}"]`);
         if (el) {

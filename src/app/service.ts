@@ -2,6 +2,7 @@ import { Branch, Attrs, Content } from './types';
 
 const tagMap = new Map([['paragraph', 'p']]);
 const textMap = new Map();
+const idsMap = new Map();
 const searches = new Map();
 
 const getUniqueId = () => `${Math.floor(Math.random() * 10000)}-${Math.floor(Math.random() * 10000)}`;
@@ -48,6 +49,7 @@ const renderBranch = (branch: Branch, html = '') => {
     const textId = getUniqueId();
     const { type, text = '', attrs } = branch;
     textMap.set(text, textId);
+    idsMap.set(textId, text);
     html += `<${getTag(type)}${getStyles(attrs)} id="${textId}">${text}</${getTag(type)}>`;
   }
   return html;
@@ -87,7 +89,28 @@ export const search = searchStr => {
 };
 
 /**
- * API
+ * API Section
  */
+
 export const renderContent = (content: Content): string => content.map(item => renderBranch(item)).join('');
 export const getSearchHistory = () => Array.from(searches.keys());
+
+/**
+ * @description
+ * We need to update sources with replaced text.
+ * Otherwise replaced text wont be visible for further searches
+ *
+ * @param ids
+ * @param searchTerm
+ * @param replacement
+ */
+export const replaceInSource = (ids: Array<string>, searchTerm: string, replacement: string) => {
+    const reg = new RegExp(searchTerm, 'ig');
+    ids.forEach(id => {
+        const text = idsMap.get(id);
+        const modifiedText = text.replace(reg, replacement);
+        textMap.delete(text);
+        textMap.set(modifiedText, id);
+    });
+};
+
