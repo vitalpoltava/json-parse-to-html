@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row">
             <div class="col-12 py-3 bg-light border-bottom">
-                <app-search (searchEmitter)="searchWord($event)"></app-search>
+                <app-search [history]="history" (searchEmitter)="searchWord($event)"></app-search>
             </div>
         </div>
         <div class="row">

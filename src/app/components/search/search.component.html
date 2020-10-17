@@ -1,7 +1,15 @@
 <div>
     <div class="d-flex flex-row">
         <div class="pr-2">
-            <button type="button" class="btn btn-info">History</button>
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="searchDropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    History
+                </button>
+                <div class="dropdown-menu" aria-labelledby="searchDropdownMenuButton">
+                    <h5 *ngIf="history.length < 1" class="dropdown-header">No history yet...</h5>
+                    <button *ngFor="let item of history" (click)="onHistoryItemSelect(item)" class="dropdown-item" >{{item}}</button>
+                </div>
+            </div>
         </div>
         <div class="pr-2">
             <div class="input-group">

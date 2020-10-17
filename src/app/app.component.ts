@@ -1,5 +1,5 @@
 import {Component, OnInit, ElementRef, ViewChild} from '@angular/core';
-import {renderContent, search, getLastSearch} from './helpers';
+import {renderContent, search, getLastSearch, getSearchHistory} from './service';
 import {documentObject} from './data/doc';
 
 @Component({
@@ -12,6 +12,10 @@ export class AppComponent implements OnInit {
 
     ngOnInit(): void {
         this.documentContent.nativeElement.innerHTML = renderContent(documentObject.content);
+    }
+
+    get history() {
+        return getSearchHistory();
     }
 
     clearLastSearch() {

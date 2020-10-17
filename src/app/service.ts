@@ -56,3 +56,4 @@ export const search = searchStr => {
 
 export const renderContent = (content: Content): string => content.map(item => renderBranch(item)).join('');
 export const getLastSearch = () => lastSearch;
+export const getSearchHistory = () => Array.from(searches.keys());
