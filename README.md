@@ -6,6 +6,8 @@ Parse json into html (with search and replace)
 ### Search
 As per the challenge description there should be search by `any text inserted by the user`, yet below only search by `words` mentioned. In the end I decided to implement something in-between and provide search within text nodes, provided by the input `json` module.
 
+Out of scope: I understand there is a possibility to design more sophisticated algorithm to check closest nodes to check if the search term is included into both (or even spreads across multiple nodes) and highlight the whole term, but I decided not to go that deep :)
+
 ### Search performance
 To make the search faster I added some kind of `text indexing` -- text nodes all have their own `id`'s which are also added to memory store. While searching we identify the list of `ids` which refer to text nodes those have search matches for sure. This could improve performance for big documents as we traversing the `DOM` using fast ID lookup transactions and in specific document places.
 
