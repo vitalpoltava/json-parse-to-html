@@ -73,6 +73,14 @@ const findSearchIds = (mapObj: Map<string, string>, searchStr = '') => {
 };
 
 /**
+ *   API Section
+ * ----------------
+ */
+
+export const renderContent = (content: Content): string => content.map(item => renderBranch(item)).join('');
+export const getSearchHistory = () => Array.from(searches.keys());
+
+/**
  * @description
  * Wrapper search function to memoize searches in order to improve performance,
  * and save searches history to use in UI
@@ -80,20 +88,13 @@ const findSearchIds = (mapObj: Map<string, string>, searchStr = '') => {
  * @param searchStr
  */
 export const search = searchStr => {
-  if (searches.has(searchStr)) {
-    return searches.get(searchStr);
-  }
-  const ids = findSearchIds(textMap, searchStr);
-  searches.set(searchStr, ids);
-  return ids;
+    if (searches.has(searchStr)) {
+        return searches.get(searchStr);
+    }
+    const ids = findSearchIds(textMap, searchStr);
+    searches.set(searchStr, ids);
+    return ids;
 };
-
-/**
- * API Section
- */
-
-export const renderContent = (content: Content): string => content.map(item => renderBranch(item)).join('');
-export const getSearchHistory = () => Array.from(searches.keys());
 
 /**
  * @description
@@ -105,12 +106,11 @@ export const getSearchHistory = () => Array.from(searches.keys());
  * @param replacement
  */
 export const replaceInSource = (ids: Array<string>, searchTerm: string, replacement: string) => {
-    const reg = new RegExp(searchTerm, 'ig');
-    ids.forEach(id => {
-        const text = idsMap.get(id);
-        const modifiedText = text.replace(reg, replacement);
-        textMap.delete(text);
-        textMap.set(modifiedText, id);
-    });
+  const reg = new RegExp(searchTerm, 'ig');
+  ids.forEach(id => {
+    const text = idsMap.get(id);
+    const modifiedText = text.replace(reg, replacement);
+    textMap.delete(text);
+    textMap.set(modifiedText, id);
+  });
 };
-
