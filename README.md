@@ -1,5 +1,5 @@
 # json-parse-to-html
-Parse json into html (with search and replace)
+Parse json into html (with search and replace). Implementing of multi leaf tree parsing into DOM tree.
 
 ## To be mentioned first:
 
