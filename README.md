@@ -1,10 +1,10 @@
-# json-parse-to-html
-Parse json into html (with search and replace)
+# Parse JSON tree structure into DOM tree
+Parse json into html (with search and replace). Implementing of multi leaf tree parsing into DOM tree.
 
 ## To be mentioned first:
 
 ### Search
-As per the challenge description there should be search by `any text inserted by the user`, yet below only search by `words` mentioned. In the end I decided to implement something in-between and provide search within text nodes, provided by the input `json` module.
+Search is being going within text nodes, provided by the input `json` module.
 
 Out of scope: I understand there is a possibility to design more sophisticated algorithm to check closest nodes to check if the search term is included into both (or even spreads across multiple nodes) and highlight the whole term, but I decided not to go that deep :)
 
@@ -14,7 +14,7 @@ To make the search faster I added some kind of `text indexing` -- text nodes all
 Also searches are being memoized.
 
 ### `JSON` config input
-As no clear mention on how `json` data should be provided I decided to make in all `frontend-only` and put it as a module into `/src/app/data` folder. For inspection purposes you can replace the content with the same structure to `doc.ts` module.
+Date module is put into `/src/app/data` folder (`doc.ts`).
 
 ### Accessibility
 Basic accessibility added - you can make all `search`/`replace` actions with keyboard only.
