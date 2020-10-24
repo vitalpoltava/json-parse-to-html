@@ -8,7 +8,7 @@ import { documentObject } from './data/doc';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  @ViewChild('documentContent') documentContent: ElementRef;
+  @ViewChild('documentContent', {static: true}) documentContent: ElementRef;
   found = 0;
 
   ngOnInit(): void {
